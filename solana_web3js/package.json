@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@solana/sysvars": "^3.0.3",
+    "@solana/web3.js": "^1.98.4"
+  }
+}
