@@ -1,4 +1,8 @@
 # anchor_first
+
+## 参考文档
+[Anchor CLI 基础](https://solana.com/zh/docs/intro/installation#anchor-cli-%E5%9F%BA%E7%A1%80)
+
 ## 运行
 ```shell
 anchor build
