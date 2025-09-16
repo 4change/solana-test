@@ -3,6 +3,8 @@ Solana 相关 Web3js 测试用例
 
 ## 运行
 ```shell
+cd cd solana_web3js/
+
 # 切换运行环境为 Node v22.19.0
 nvm use v22.19.0
 
