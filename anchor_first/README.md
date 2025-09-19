@@ -5,6 +5,8 @@
 
 ## 运行
 ```shell
+nvm use v22.19.0
+
 anchor build
 
 # 运行所有测试用例
