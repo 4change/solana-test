@@ -28,7 +28,7 @@ describe("pda", () => {
     const transactionSignature = await program.methods
       .create(message)
       .accounts({
-        messageAccount: messagePda,
+        messageAccount: messagePda,         // 忽略此处的编译器警告
       })
       .rpc({ commitment: "confirmed" });
 
