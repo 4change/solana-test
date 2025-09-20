@@ -26,7 +26,7 @@ describe("pda-account", () => {
       })
       .rpc();
 
-    console.log("派生 PDA 地址的账户的 PublicKey------------------------------------------", user.publicKey);
+    console.log("派生 PDA 地址的账户的 PublicKey------------------------------------------", user.publicKey.toBase58());
     console.log("Transaction Signature:", transactionSignature);
   });
 
