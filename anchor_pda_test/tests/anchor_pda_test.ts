@@ -7,10 +7,10 @@ describe("pda-account", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  const program = anchor.workspace.PdaAccount as Program<PdaAccount>;
-  const user = provider.wallet as anchor.Wallet;
+  const program = anchor.workspace.PdaAccount as Program<PdaAccount>;       // 获取程序
+  const user = provider.wallet as anchor.Wallet;                            // 获取钱包
 
-  // Derive the PDA address using the seeds specified on the program
+  // 根据种子和程序 ID 派生 PDA 地址
   const [PDA] = PublicKey.findProgramAddressSync(
     [Buffer.from("data"), user.publicKey.toBuffer()],
     program.programId
@@ -20,17 +20,18 @@ describe("pda-account", () => {
   // 这是因为在推导出的地址上已经存在一个账户。
   it("Is initialized!", async () => {
     const transactionSignature = await program.methods
-      .initialize()
+      .initialize()             // 调用 initialize 指令
       .accounts({
-        user: user.publicKey
+        user: user.publicKey      // 签名账户
       })
       .rpc();
 
+    console.log("派生 PDA 地址的账户的 PublicKey------------------------------------------", user.publicKey);
     console.log("Transaction Signature:", transactionSignature);
   });
 
   it("Fetch Account", async () => {
     const pdaAccount = await program.account.dataAccount.fetch(PDA);
-    console.log(JSON.stringify(pdaAccount, null, 2));
+    console.log("根据 PDA 地址反查出来的账户的账户信息---------------------" + JSON.stringify(pdaAccount, null, 2));
   });
 });

@@ -31,13 +31,13 @@ pub struct Initialize<'info> {
         space = 8 + DataAccount::INIT_SPACE
     )]
     pub pda_account: Account<'info, DataAccount>,
+
     pub system_program: Program<'info, System>,
 }
 
 #[account]
-
 #[derive(InitSpace)]
 pub struct DataAccount {
     pub user: Pubkey,
-    pub bump: u8,
+    pub bump: u8,                   // 存储 PDA 账户的 bump 种子
 }
