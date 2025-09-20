@@ -4,9 +4,6 @@ import { AnchorPdaCrud } from "../target/types/anchor_pda_crud";
 import { PublicKey } from "@solana/web3.js";
 
 describe("PDA CRUD Test", () => {
-  // const program = pg.program;
-  // const wallet = pg.wallet;
-
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
