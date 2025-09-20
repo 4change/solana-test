@@ -203,7 +203,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "anchor_pda_crud"
+name = "anchor_pda_cpi_crud"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",

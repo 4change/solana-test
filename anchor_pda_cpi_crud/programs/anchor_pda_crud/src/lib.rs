@@ -1,10 +1,10 @@
 use anchor_lang::prelude::*;
 use anchor_lang::system_program::{transfer, Transfer};
 
-declare_id!("3dTgUegNtphEnDmnLRsnL97SFHXih6tCKeAy8gCk5tAj");
+declare_id!("9S11QVMoWb1W57EJ6jbaZt54hvGHzjGLce5VL69QhPqF");
 
 #[program]
-pub mod anchor_pda_crud {
+pub mod anchor_pda_cpi_crud {
     use super::*;
 
     pub fn create(ctx: Context<Create>, message: String) -> Result<()> {

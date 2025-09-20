@@ -1,13 +1,13 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { AnchorPdaCrud } from "../target/types/anchor_pda_crud";
+import { AnchorPdaCpiCrud } from "../target/types/anchor_pda_cpi_crud";
 import { PublicKey } from "@solana/web3.js";
 
 describe("PDA CRUD Test", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  const program = anchor.workspace.AnchorPdaCrud as Program<AnchorPdaCrud>;     // 获取程序
+  const program = anchor.workspace.AnchorPdaCpiCrud as Program<AnchorPdaCpiCrud>;     // 获取程序
   const wallet = provider.wallet as anchor.Wallet;                              // 获取钱包
 
   const [messagePda, messageBump] = PublicKey.findProgramAddressSync(
