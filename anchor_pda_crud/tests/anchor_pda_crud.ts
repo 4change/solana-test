@@ -3,15 +3,15 @@ import { Program } from "@coral-xyz/anchor";
 import { AnchorPdaCrud } from "../target/types/anchor_pda_crud";
 import { PublicKey } from "@solana/web3.js";
 
-describe("pda", () => {
+describe("PDA CRUD Test", () => {
   // const program = pg.program;
   // const wallet = pg.wallet;
 
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  const program = anchor.workspace.AnchorPdaCrud as Program<AnchorPdaCrud>;
-  const wallet = provider.wallet as anchor.Wallet;
+  const program = anchor.workspace.AnchorPdaCrud as Program<AnchorPdaCrud>;     // 获取程序
+  const wallet = provider.wallet as anchor.Wallet;                              // 获取钱包
 
   const [messagePda, messageBump] = PublicKey.findProgramAddressSync(
     [Buffer.from("message"), wallet.publicKey.toBuffer()],
@@ -19,7 +19,7 @@ describe("pda", () => {
   );
 
   const [vaultPda, vaultBump] = PublicKey.findProgramAddressSync(
-    [Buffer.from("vault"), wallet.publicKey.toBuffer()],
+    [Buffer.from("vault"), wallet.publicKey.toBuffer()],    // vault 为派生 PDA 的种子
     program.programId
   );
 
@@ -27,7 +27,7 @@ describe("pda", () => {
     const message = "Hello, World!";
     const transactionSignature = await program.methods
       .create(message)
-      .accounts({
+      .accounts({                   // 为啥这里账户的数据可以不完整？
         messageAccount: messagePda,         // 忽略此处的编译器警告
       })
       .rpc({ commitment: "confirmed" });
@@ -37,7 +37,8 @@ describe("pda", () => {
       "confirmed"
     );
 
-    console.log(JSON.stringify(messageAccount, null, 2));
+    console.log("sign wallet publicKey------------------------------------------" + wallet.publicKey.toBase58());
+    console.log("message account------------------------------------" + JSON.stringify(messageAccount, null, 2));
     console.log(
       "Transaction Signature:",
       `https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
@@ -48,7 +49,7 @@ describe("pda", () => {
     const message = "Hello, Solana!";
     const transactionSignature = await program.methods
       .update(message)
-      .accounts({
+      .accounts({         // TODO 为什么这里的账户不完整？
         messageAccount: messagePda,
         vaultAccount: vaultPda,
       })
@@ -59,7 +60,7 @@ describe("pda", () => {
       "confirmed"
     );
 
-    console.log(JSON.stringify(messageAccount, null, 2));
+    console.log("messageAccount--------------------------------------" + JSON.stringify(messageAccount, null, 2));
     console.log(
       "Transaction Signature:",
       `https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
@@ -80,7 +81,7 @@ describe("pda", () => {
       "confirmed"
     );
 
-    console.log("Expect Null:", JSON.stringify(messageAccount, null, 2));
+    console.log("Expect Null-----------------------:", JSON.stringify(messageAccount, null, 2));
     console.log(
       "Transaction Signature:",
       `https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`

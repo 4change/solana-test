@@ -22,19 +22,20 @@ pub mod anchor_pda_crud {
         account_data.message = message;
 
         let transfer_accounts = Transfer {
-            from: ctx.accounts.user.to_account_info(),
-            to: ctx.accounts.vault_account.to_account_info(),
+            from: ctx.accounts.user.to_account_info(),              // 资金来源
+            to: ctx.accounts.vault_account.to_account_info(),       // 资金接收方
         };
         let cpi_context = CpiContext::new(
             ctx.accounts.system_program.to_account_info(),
             transfer_accounts,
         );
+        // 执行 CPI 调用，将 1,000,000 lamport 从用户账户转账到资金账户
         transfer(cpi_context, 1_000_000)?;
         Ok(())
     }
 
     pub fn delete(ctx: Context<Delete>) -> Result<()> {
-        msg!("Delete Message");
+        msg!("Delete Message------------------------------");
         let user_key = ctx.accounts.user.key();
         let signer_seeds: &[&[&[u8]]] =
             &[&[b"vault", user_key.as_ref(), &[ctx.bumps.vault_account]]];
@@ -43,10 +44,12 @@ pub mod anchor_pda_crud {
             from: ctx.accounts.vault_account.to_account_info(),
             to: ctx.accounts.user.to_account_info(),
         };
+        // 构建 CPI 上下文，包含系统程序和转账账户信息，以及签名者种子
         let cpi_context = CpiContext::new(
             ctx.accounts.system_program.to_account_info(),
             transfer_accounts,
         ).with_signer(signer_seeds);
+        // 执行 CPI 调用，将资金账户中的所有 lamport 转账到用户账户
         transfer(cpi_context, ctx.accounts.vault_account.lamports())?;
         Ok(())
     }
@@ -68,6 +71,7 @@ pub struct Create<'info> {
         space = 8 + 32 + 4 + message.len() + 1
     )]
     pub message_account: Account<'info, MessageAccount>,        // 存储用户消息的新账户
+
     pub system_program: Program<'info, System>,
 }
 
@@ -82,17 +86,17 @@ pub struct Update<'info> {
         seeds = [b"vault", user.key().as_ref()],
         bump,
     )]
-    pub vault_account: SystemAccount<'info>,
+    pub vault_account: SystemAccount<'info>,                    // 资金账户
 
     #[account(
         mut,
-        seeds = [b"message", user.key().as_ref()],
+        seeds = [b"message", user.key().as_ref()],              // message 为派生用户 PDA 的种子
         bump = message_account.bump,
         realloc = 8 + 32 + 4 + message.len() + 1,
         realloc::payer = user,
         realloc::zero = true,
     )]
-    pub message_account: Account<'info, MessageAccount>,
+    pub message_account: Account<'info, MessageAccount>,        // 消息账户
 
     pub system_program: Program<'info, System>,
 }
