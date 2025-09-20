@@ -6,7 +6,10 @@
 ```shell
 cd anchor_pda_test
 
-nvm use nvm use v22.19.0
+nvm use v22.19.0
+
+# 安装依赖
+yarn
 
 # 编译
 anchor build
