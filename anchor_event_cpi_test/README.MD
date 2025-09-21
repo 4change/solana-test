@@ -1,10 +1,10 @@
-# anchor_event_test
+# anchor_event_cpi_test
 ## 参考文档
-[发出事件：emit](https://learnblockchain.cn/docs/anchor/features/events#emit)
+[发出事件：emit_cpi](https://learnblockchain.cn/docs/anchor/features/events#emit_cpi)
 
 ## 运行
 ```shell
-cd anchor_event_test
+cd anchor_event_cpi_test
 
 nvm use v22.19.0
 
@@ -13,6 +13,9 @@ yarn
 
 # 编译
 anchor build
+
+# 获取编译后的程序ID，并将 lib.rs 文件中的程序 ID 替换为该 ID
+solana program show ./target/deploy/anchor_event_cpi_test-keypair.json
 
 # 部署
 anchor deploy
