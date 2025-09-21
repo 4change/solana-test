@@ -13,7 +13,7 @@ pub mod anchor_event_cpi_test {
 }
  
 
-#[event_cpi]
+#[event_cpi]                    // 触发 CPI 事件时，必须添加该约束
 #[derive(Accounts)]
 pub struct EmitEvent {}
  
