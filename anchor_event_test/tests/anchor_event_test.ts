@@ -10,8 +10,6 @@ describe("anchor_event_test", () => {
 
   it("发出自定义事件", async () => {
     // 在发送交易之前设置监听器
-
-
     const listenerId = program.addEventListener("customEvent", event => {
       // 使用事件数据执行某些操作
       console.log("事件数据:", event);
